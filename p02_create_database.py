@@ -6,7 +6,7 @@ Z pythonu sa pripojte k serveru mysql. Potom vytvorte databázu cinematic."""
 try:
     with connect(host=host, user=user, password=password) as conn:
         with conn.cursor() as cursor:
-            cursor.execute("CREATE DATABASE cinematic;")  # Opravené
+            cursor.execute("CREATE DATABASE cinematic;")
             print("Databáze 'cinematic' bola vytvorena.")
 
 except Error as e:
