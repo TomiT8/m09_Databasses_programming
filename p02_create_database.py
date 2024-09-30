@@ -37,7 +37,11 @@ riaditelia (režiséři): director_id(PK), meno, priezvisko, rating
 filmy (filmy): movie_id(PK), názov, rok, kategória, director_id(FK), hodnotenie
 """
 
+""" Úloha 4
+Spustite, ktoré ste napsali dříve, a dotaz zobrazíte v databázi cinematic."""
+
 try:
+# vytvorenie databáze
     with connect(host=host, user=user, password=password, database="cinematic") as conn:
         create_table_directors = """
             CREATE TABLE IF NOT EXISTS directors (
@@ -58,7 +62,7 @@ try:
                 CONSTRAINT movies_director FOREIGN KEY (director_id) REFERENCES directors (director_id)
             ) DEFAULT CHARACTER SET utf8;
         """
-
+    # Vytvorenie tabuliek
         with conn.cursor() as cursor:
             cursor.execute(create_table_directors)
             print("Tabuľka 'directors' bola vytvorená.")
