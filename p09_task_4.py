@@ -10,16 +10,45 @@ Nápoveda
 Ak chcete získať výsledok ako slovníky, pri vytváraní kurzora použite triedu DictCursor.
 """
 
+# try:
+#     with connect(host=host, user=user, password=password, database='music') as conn:
+#         with conn.cursor(dictionary=True) as cursor:
+#             get_instruments_count = """SELECT family, count(*) as count FROM instruments GROUP BY family;"""
+#             cursor.execute(get_instruments_count)
+#             instruments = cursor.fetchall()
+#
+#             print("Family\t\t\tCount")
+#             for instrument in instruments:
+#                 print(f"{instrument['family']}\t\t\t{instrument['count']}")
+#
+# except Error as e:
+#     print(e)
+#
+# print("")
+# print("Koniec")
+# print("")
+# print("")
+
+
+def get_instruments_count(connection):
+    with connection.cursor(dictionary=True) as cursor:
+        get_instruments_sql = """
+        SELECT family, count(*) as count
+        FROM instruments
+        GROUP BY family;"""
+        cursor.execute(get_instruments_sql)
+        return cursor.fetchall()
+
 try:
     with connect(host=host, user=user, password=password, database='music') as conn:
-        with conn.cursor(dictionary=True) as cursor:
-            get_instruments_count = """SELECT family, count(*) as count FROM instruments GROUP BY family;"""
-            cursor.execute(get_instruments_count)
-            instruments = cursor.fetchall()
+        instruments = get_instruments_count(conn)
 
-            print("Family\t\t\tCount")
-            for instrument in instruments:
-                print(f"{instrument['family']}\t\t\t{instrument['count']}")
+        print("Family\t\t\tCount")
+        for instrument in instruments:
+            print(f"{instrument['family']}\t\t\t{instrument['count']}")
+
+    print("")
+    print("Tabuľka 'instruments' bola vyplnená.")
 
 except Error as e:
     print(e)

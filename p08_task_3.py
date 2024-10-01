@@ -16,18 +16,39 @@ instruments = [
     ('tambourine', 'percussion', 'easy'),
     ('organ', 'keyboard', 'hard')]
 
+
+# try:
+#     with connect(host=host, user=user, password=password, database='music') as conn:
+#         with conn.cursor() as cursor:
+#             insert_instruments = """
+#                 INSERT INTO instruments (name, family, difficulty)
+#                 VALUES (%s, %s, %s)
+#             """
+#             cursor.executemany(insert_instruments, instruments)
+#             conn.commit()
+#             print("Tabuľka 'instruments' bola vyplnená.")
+#
+# except Error as e:
+#     print(e)
+#
+# print("Koniec")
+
+def insert_instruments(connection, instruments_list):
+    with connection.cursor() as cursor:
+        sql_statement = """
+            INSERT INTO instruments
+            (name, family, difficulty)
+            VALUES (%s, %s, %s);
+        """
+        cursor.executemany(sql_statement, instruments_list)
+        connection.commit()
+
+
+print("Tabuľka 'instruments' bola vyplnená.")
+
 try:
     with connect(host=host, user=user, password=password, database='music') as conn:
-        with conn.cursor() as cursor:
-            insert_instruments = """
-                INSERT INTO instruments (name, family, difficulty)
-                VALUES (%s, %s, %s)
-            """
-            cursor.executemany(insert_instruments, instruments)
-            conn.commit()
-            print("Tabuľka 'instruments' bola vyplnená.")
+        insert_instruments(conn, instruments)
 
 except Error as e:
     print(e)
-
-print("Koniec")
