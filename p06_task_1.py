@@ -1,4 +1,5 @@
 from mysql.connector import connect, Error
+from connection_details import *
 
 """Úloha 1
 Pripojte sa k mysqlserveru a skontrolujte všetky existujúce databázy."""
