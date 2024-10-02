@@ -27,3 +27,17 @@ class Locker(Base):
 
     def __str__(self):
         return f"Skrínka #{self.number} patrí študentovi: {self.student}"
+
+
+class Address(Base):
+    __tablename__ = 'address'
+    student = Column(Integer, ForeignKey('students.id'), primary_key=True)
+    street_name = Column(String(50))
+    number = Column(Integer)
+    city = Column(String(50))
+
+    def __repr__(self):
+        return f"Addres(street_name={self.street_name}, number={self.number}, city={self.city}, student={self.student})"
+
+    def __str__(self):
+        return f"Address #{self.street_name}{self.number}, {self.city} patrí študentovi: {self.student}"
