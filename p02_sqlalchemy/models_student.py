@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -15,3 +15,15 @@ class Student(Base):
 
     def __repr__(self):
         return f"Student(first_name={self.first_name}, last_name={self.last_name})"
+
+
+class Locker(Base):
+    __tablename__ = 'lockers'
+    number = Column(Integer, primary_key=True)
+    student = Column(Integer, ForeignKey('students.id'))  # Opravená syntax pre cudzie kľúče
+
+    def __repr__(self):
+        return f"Locker(number={self.number}, student={self.student})"
+
+    def __str__(self):
+        return f"Skrínka #{self.number} patrí študentovi: {self.student}"
