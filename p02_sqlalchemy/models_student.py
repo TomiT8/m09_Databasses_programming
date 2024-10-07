@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -40,4 +40,18 @@ class Address(Base):
         return f"Addres(street_name={self.street_name}, number={self.number}, city={self.city}, student={self.student})"
 
     def __str__(self):
-        return f"Address #{self.street_name}{self.number}, {self.city} patrí študentovi: {self.student}"
+        return f"Address #{self.street_name} {self.number}, {self.city} patrí študentovi: {self.student}"
+
+
+class Grades(Base):
+    __tablename__ = 'grades'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    student = Column(Integer, ForeignKey('students.id'))
+    grade = Column(String(2))
+    data_create = Column(DateTime)
+
+    def __repr__(self):
+        return f"Student(student={self.student}, grade={self.grade}, data_create={self.data_create}, id={self.id})"
+
+    def __str__(self):
+        return f"Student ID: {self.student}, Grade: {self.grade}, Date: {self.data_create}"
